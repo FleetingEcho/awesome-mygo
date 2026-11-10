@@ -1,4 +1,4 @@
-import { AI_TOOLS, APPS, INSTALL_CMDS, INSTALL_TABS, type InstallTab, MYGO_SITE, PLUGINS, STATE_SOLUTIONS, TEMPLATES, UI_LIBS, appBySlug, fill, langDef, pad2, pick } from '@awesome-mygo/catalog';
+import { AI_TOOLS, APPS, FEATURED_APPS, INSTALL_CMDS, INSTALL_TABS, type InstallTab, MYGO_SITE, PLUGINS, STATE_SOLUTIONS, TEMPLATES, UI_LIBS, appBySlug, fill, langDef, pad2, pick } from '@awesome-mygo/catalog';
 import { Link, createFileRoute, useNavigate } from '@tanstack/react-router';
 import { type CSSProperties, type PointerEvent, useEffect, useRef } from 'react';
 import { AppLink, KindTag, MonoTile, PlatformTags, WinBar, appView } from '../components/bits';
@@ -37,8 +37,6 @@ const HERO_APPS = [
 	{ slug: 'mixmusic', left: 650, top: 40, w: 250, z: -60, ry: -6, hide: 'max-tab:hidden', bob: 'animate-[bob_7s_ease-in-out_-1s_infinite_alternate]', pop: POP_WIN_2 },
 	{ slug: 'godwit', left: 970, top: 110, w: 230, z: -180, ry: -14, hide: 'max-hero:hidden', bob: 'animate-[bob_7s_ease-in-out_-5s_infinite_alternate]', pop: POP_WIN_3 },
 ] as const;
-
-const FEATURED = ['mixmusic', 'kero', 'liubai', 'godwit'] as const;
 
 // The two sections under the hero (categories, featured) share their box, head row and heading; each adds its own vertical padding.
 const SEC = 'site-shell mx-auto flex flex-col gap-7 px-6 max-sm:px-5';
@@ -94,12 +92,13 @@ function HomePage() {
 					</Link>
 				</div>
 				<div className='grid grid-cols-[repeat(auto-fit,minmax(min(100%,270px),1fr))] gap-4'>
-					{FEATURED.map((slug, k) => {
-						const v = appView(mustApp(slug));
+					{/* The apps whose files say "featured": true (FEATURED_APPS). */}
+					{FEATURED_APPS.map((app, k) => {
+						const v = appView(app);
 						return (
-							<div key={slug} className={`rv d${k} flex`}>
+							<div key={app.slug} className={`rv d${k % 6} flex`}>
 								{/* A link to the app's page that keeps the look it had as a button instead of the link colour and underline. */}
-								<AppLink slug={slug} className='win card text-fg no-underline' dialog>
+								<AppLink slug={app.slug} className='win card text-fg no-underline' dialog>
 									<WinBar label={v.host} size='sm' className='card-bar' />
 									<div className='flex flex-auto flex-col gap-3.5 p-[22px] max-sm:p-[18px]'>
 										<MonoTile view={v} size={52} />
