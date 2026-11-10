@@ -5,6 +5,7 @@
 	"author": "baranwang",
 	"kind": "native",
 	"platforms": ["win", "linux", "mac"],
+	"featured": true,
 	"category": "CommunicationApplication",
 	"group": "chat",
 	"url": "https://godwit.email",
